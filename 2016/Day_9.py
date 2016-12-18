@@ -1,0 +1,2 @@
+# Part One
+First_Part=lambda k,v=[],re=__import__('re'),J=lambda u,re=__import__('re'):re.match('\w+|\(\d+x\d+\)',u):len(k)>0 and First_Part(k[J(k).span()[1]+int(re.search('(?<=\()\d+',J(k).group()[0]=='('and J(k).group()or'(0').group()):],v+[J(k).group()[0]=='('and k[J(k).span()[1]:][:int(re.search('\d+',J(k).group()).group())]*int(re.search('(?<=x)\d+',J(k).group()).group())or J(k).group()])or len(''.join(v)) 
