@@ -1,5 +1,6 @@
 from hashlib import *
 import re
+
 # First Part
 def First_Part(s):
   p=i=0;
