@@ -11,7 +11,7 @@ def First_Part(s):
       if not l[2].isdigit():
         Reg[l[2]]=l[1].isdigit()and int(l[1])or Reg[l[1]]
     elif l[0]=='jnz':
-      i+=((l[1].isdigit()and int(l[1]))or Reg[l[1]])and(l[2].isdigit()and int(l[2])-1or Reg[l[2]]-1)or 0
+      i+=int(l[2])-1 if (l[1].isdigit() and int(l[1])) or Reg[l[1]] else 0
     elif l[0]=='tgl':
       I=i+((l[1].isdigit() and int(l[1]))or Reg[l[1]])
       if len(s[I].split())>2:
