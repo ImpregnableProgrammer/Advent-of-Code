@@ -6,9 +6,9 @@ def First_Part(s):
   while i<len(s):
     l=s[i].split()
     if l[0]=='cpy':
-      Reg[l[2]]=l[1].isdigit()and int(l[1])or Reg[l[1]]
+      Reg[l[2]]=int(l[1]) if l[1].isdigit() else Reg[l[1]]
     elif l[0]=='jnz':
-      i+=((l[1].isdigit()and int(l[1]))or Reg[l[1]])and int(l[2])-1or 0
+      i+=int(l[2])-1 if (l[1].isdigit() and int(l[1])) or Reg[l[1]] else 0
     else:
       Reg[l[1]]+=(-1)**(l[0]=='dec')
     i+=1
@@ -22,9 +22,9 @@ def Second_Part(s):
   while i<len(s):
     l=s[i].split()
     if l[0]=='cpy':
-      Reg[l[2]]=l[1].isdigit()and int(l[1])or Reg[l[1]]
+      Reg[l[2]]=int(l[1]) if l[1].isdigit() else Reg[l[1]]
     elif l[0]=='jnz':
-      i+=((l[1].isdigit()and int(l[1]))or Reg[l[1]])and int(l[2])-1or 0
+      i+=int(l[2])-1 if (l[1].isdigit() and int(l[1])) or Reg[l[1]] else 0
     else:
       Reg[l[1]]+=(-1)**(l[0]=='dec')
     i+=1
