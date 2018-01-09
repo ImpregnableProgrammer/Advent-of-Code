@@ -1,24 +1,20 @@
 # First Part
-def First_Part(n,xf,yf):
-  i=0
-  l={(1,1):[[1,1,'']]}
+from hashlib import *
+def First_Part(n):
+  l={'':[0,0]}
   while 1:
     u={}
-    for g in l:
-      xo,yo=g[0],g[1]
-      for q in l[g]:
-        x,y=q[0],q[1]
-        p=q[2]
-        u[(x,y)]=[]
-        if x==xf and y==yf:
-          return (i,p)
-        if not bin((x+y+1)*(x+y+4)-2*y+n).count('1')%2:
-          u[(x,y)]+=[[x+1,y,p+'R']]
-        if not bin((x+y+1)*(x+y+4)-2*y-2+n).count('1')%2:
-          u[(x,y)]+=[[x,y+1,p+'D']]
-        if not bin((x+y-1)*(x+y+2)-2*y+n).count('1')%2 and x-1>-1 and x-1!=xo:
-          u[(x,y)]+=[[x-1,y,p+'L']]
-        if not bin((x+y-1)*(x+y+2)-2*y+2+n).count('1')%2 and y-1>-1 and y-1!=yo:
-          u[(x,y)]+=[[x,y-1,p+'U']]
-    i+=1
+    for p in l:
+      x,y=l[p][0],l[p][1]
+      hash=md5(bytes(n+p,'utf8')).hexdigest()
+      if x==3 and y==3:
+        return p
+      if 'b'<=hash[3]<='f' and x+1<4:
+        u[p+'R']=[x+1,y]
+      if 'b'<=hash[1]<='f' and y+1<4:
+        u[p+'D']=[x,y+1]
+      if 'b'<=hash[2]<='f' and x-1>-1:
+        u[p+'L']=[x-1,y]
+      if 'b'<=hash[0]<='f' and y-1>-1:
+        u[p+'U']=[x,y-1]
     l=u
