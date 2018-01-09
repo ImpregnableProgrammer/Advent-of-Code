@@ -20,6 +20,9 @@ def First_Part(n):
     l=u
     
 # Second Part
+# We must assume that the program will always eventually halt with given input.
+# That is, there is always a solution. 
+# In other words, no single path results in a never-ending loop.
 def Second_Part(n):
   l={'':[0,0]}
   T=0
