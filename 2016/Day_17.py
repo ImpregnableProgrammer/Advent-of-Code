@@ -19,7 +19,7 @@ def First_Part(n):
         u[p+'U']=[x,y-1]
     l=u
     
-# Second Part
+# Second Part – IN PROGRESS
 def Second_Part(n):
   l={'':[0,0]}
   while 1:
