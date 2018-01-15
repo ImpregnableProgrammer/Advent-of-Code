@@ -13,6 +13,8 @@ def First_Part(s):
       U=[Old]
       for u in range(1,len(i)):
         for q in range(4):
+          if len(i[u][3])==E:
+            return P
           for z in range(len(i[u][q])):
             O=i[u][q][z].replace('-compatible microchip','').replace(' generator','')
             if q+1<4:
