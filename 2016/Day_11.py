@@ -19,16 +19,17 @@ def First_Part(s):
         for q in range(4):
           for z in range(len(i[u][q])):
             O=i[u][q][z].replace('-compatible microchip','').replace(' generator','')
+            V=not (any(n for n in i[u][q] if 'generator' in n and O not in n) and O+'-compatible microchip' in i[u][q])
             if q+1<4:
               L=i[u][:q]+[i[u][q][:z]+i[u][q][z+1:]]+[i[u][q+1]+[i[u][q][z]]]+i[u][q+2:]
-              if ('generator' in i[u][q][z] and all(n.replace('-compatible microchip',' generator') in i[u][q+1] for n in i[u][q+1] if 'microchip' in n and O not in n) and not (any(n for n in i[u][q] if 'generator' in n and O not in n) and O+'-compatible microchip' in i[u][q]))\
+              if ('generator' in i[u][q][z] and all(n.replace('-compatible microchip',' generator') in i[u][q+1] for n in i[u][q+1] if 'microchip' in n and O not in n) and V)\
               or ('microchip' in i[u][q][z] and (not any(n for n in i[u][q+1] if 'generator' in n and O not in n) or O+' generator' in i[u][q+1]))\
               and L!=Old:
                 print(L)
                 U+=[L]
             if q-1>-1:
               L=i[u][:q-1]+[i[u][q-1]+[i[u][q][z]]]+[i[u][q][:z]+i[u][q][z+1:]]+i[u][q+1:]
-              if ('generator' in i[u][q][z] and all(n.replace('-compatible microchip',' generator') in i[u][q-1] for n in i[u][q-1] if 'microchip' in n and O not in n) and not (any(n for n in i[u][q] if 'generator' in n and O not in n) and O+'-compatible microchip' in i[u][q]))\
+              if ('generator' in i[u][q][z] and all(n.replace('-compatible microchip',' generator') in i[u][q-1] for n in i[u][q-1] if 'microchip' in n and O not in n) and V)\
               or ('microchip' in i[u][q][z] and (not any(n for n in i[u][q-1] if 'generator' in n and O not in n) or O+' generator' in i[u][q-1]))\
               and L!=Old:
                 print(L)
