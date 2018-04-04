@@ -52,7 +52,7 @@ import re
 # Breadth-first search
 # FINAL WORKING SOLUTION FOR BOTH PARTS!
 def BFSearch(s):
-  Conf = tuple(tuple(re.findall("[a-z]+(?:M|R)", s.split("\n")[i].replace("-compatible microchip", "M").replace(" generator", "R"))) for i in range(4))
+  Conf = tuple(tuple(sorted(re.findall("[a-z]+(?:M|R)", s.split("\n")[i].replace("-compatible microchip", "M").replace(" generator", "R")))) for i in range(4))
   Elements = {Conf:0}
   Old = set()
   print(Elements, "\n")
@@ -63,7 +63,6 @@ def BFSearch(s):
     for element, floor in Elements.items():
       if len(element[-1]) == Size:
         return Step
-      D = tuple(tuple(sorted(i)) for i in element)
       for obj in range(len(element[floor])):
         Current = element[floor][obj]
         if Current[-1] == "M":
@@ -71,12 +70,12 @@ def BFSearch(s):
             Z = tuple(tuple(sorted(g)) for g in element[:floor] + (element[floor][:obj] + element[floor][obj+1:],) + ((Current,) + element[floor+1],) + element[floor+2:])
             if Z not in Old and Z not in T.keys():
               T.update({Z:floor + 1})
-              Old.add(D)              
+              Old.add(element)              
           if floor - 1 >= 0 and (Current[:-1] + "R" in element[floor - 1] or all(i[-1] != "R" for i in element[floor-1])) and any(len(i) for i in element[:floor]):
             Z = tuple(tuple(sorted(g)) for g in element[:floor-1] + ((Current,) + element[floor-1],) + (element[floor][:obj] + element[floor][obj+1:],) + element[floor+1:])
             if Z not in Old and Z not in T.keys():
               T.update({Z:floor - 1})
-              Old.add(D)              
+              Old.add(element)              
           for obj2 in range(obj+1, len(element[floor])):
             Current2 = element[floor][obj2]
             if Current2[:-1] == Current[:-1] and Current2[-1] == "R":
@@ -84,35 +83,35 @@ def BFSearch(s):
                 Z = tuple(tuple(sorted(g)) for g in element[:floor] + (element[floor][:obj] + element[floor][obj+1:obj2] + element[floor][obj2+1:],) + ((Current,) + (Current2,) + element[floor+1],) + element[floor+2:])
                 if Z not in Old and Z not in T.keys():
                   T.update({Z:floor + 1})
-                  Old.add(D)                  
+                  Old.add(element)                  
               if floor - 1 >= 0 and all(i[:-1] + "R" in element[floor-1] for i in element[floor-1] if i[-1] == "M") and any(len(i) for i in element[:floor]):
                 Z = tuple(tuple(sorted(g)) for g in element[:floor-1] + ((Current,) + (Current2,) + element[floor-1],) + (element[floor][:obj] + element[floor][obj+1:obj2] + element[floor][obj2+1:],) + element[floor+1:])
                 if Z not in Old and Z not in T.keys():
                   T.update({Z:floor - 1})
-                  Old.add(D)                  
+                  Old.add(element)                  
             elif Current2[-1] == "M":
               if floor + 1 < 4 and ((Current[:-1] + "R" in element[floor+1] and Current2[:-1] + "R" in element[floor+1]) or all(i[-1] != "R" for i in element[floor+1])):
                 Z = tuple(tuple(sorted(g)) for g in element[:floor] + (element[floor][:obj] + element[floor][obj+1:obj2] + element[floor][obj2+1:],) + ((Current,) + (Current2,) + element[floor+1],) + element[floor+2:])
                 if Z not in Old and Z not in T.keys():
                   T.update({Z:floor + 1})
-                  Old.add(D)                  
+                  Old.add(element)                  
               if floor - 1 >= 0 and ((Current[:-1] + "R" in element[floor-1] and Current2[:-1] + "R" in element[floor-1]) or all(i[-1] != "R" for i in element[floor-1])) and any(len(i) for i in element[:floor]):
                 Z = tuple(tuple(sorted(g)) for g in element[:floor-1] + ((Current,) + (Current2,) + element[floor-1],) + (element[floor][:obj] + element[floor][obj+1:obj2] + element[floor][obj2+1:],) + element[floor+1:])
                 if Z not in Old and Z not in T.keys():
                   T.update({Z:floor - 1})
-                  Old.add(D)                  
+                  Old.add(element)                  
         else:
           Behind = Current[:-1] + "M" in element[floor] and any(i[-1] == "R" for i in element[floor] if i[:-1] != Current[:-1])
           if floor + 1 < 4 and all(i[:-1] + "R" in element[floor+1] for i in element[floor+1] if i[-1] == "M" and i[:-1] != Current[:-1]) and not Behind:
             Z = tuple(tuple(sorted(g)) for g in element[:floor] + (element[floor][:obj] + element[floor][obj+1:],) + ((Current,) + element[floor+1],) + element[floor+2:])
             if Z not in Old and Z not in T.keys():
               T.update({Z:floor + 1})
-              Old.add(D)              
+              Old.add(element)              
           if floor - 1 >= 0 and all(i[:-1] + "R" in element[floor-1] for i in element[floor-1] if i[-1] == "M" and i[:-1] != Current[:-1]) and not Behind and any(len(i) for i in element[:floor]):
             Z = tuple(tuple(sorted(g)) for g in element[:floor-1] + ((Current,) + element[floor-1],) + (element[floor][:obj] + element[floor][obj+1:],) + element[floor+1:])
             if Z not in Old and Z not in T.keys():
               T.update({Z:floor - 1})
-              Old.add(D)              
+              Old.add(element)              
           for obj2 in range(obj+1, len(element[floor])):
             Current2 = element[floor][obj2]
             Behind2 = (Current2[:-1] + "M" in element[floor] or Current[:-1] in element[floor]) and any(i[-1] == "R" for i in element[floor] if i[:-1] != Current2[:-1] and i[:-1] != Current[:-1])
@@ -121,34 +120,34 @@ def BFSearch(s):
                 Z = tuple(tuple(sorted(g)) for g in element[:floor] + (element[floor][:obj] + element[floor][obj+1:obj2] + element[floor][obj2+1:],) + ((Current,) + (Current2,) + element[floor+1],) + element[floor+2:])
                 if Z not in Old and Z not in T.keys():
                   T.update({Z:floor + 1})
-                  Old.add(D)                  
+                  Old.add(element)                  
               if floor - 1 >= 0 and all(i[:-1] + "R" in element[floor-1] for i in element[floor-1] if i[-1] == "M") and any(len(i) for i in element[:floor]):
                 Z = tuple(tuple(sorted(g)) for g in element[:floor-1] + ((Current,) + (Current2,) + element[floor-1],) + (element[floor][:obj] + element[floor][obj+1:obj2] + element[floor][obj2+1:],) + element[floor+1:])
                 if Z not in Old and Z not in T.keys():
                   T.update({Z:floor - 1})
-                  Old.add(D)                  
+                  Old.add(element)                  
             elif Current2[-1] == "R" and not Behind2:
               if floor + 1 < 4 and all(i[:-1] + "R" in element[floor+1] for i in element[floor+1] if i[-1] == "M" and i[:-1] != Current[:-1] and i[:-1] != Current2[:-1]):
                 Z = tuple(tuple(sorted(g)) for g in element[:floor] + (element[floor][:obj] + element[floor][obj+1:obj2] + element[floor][obj2+1:],) + ((Current,) + (Current2,) + element[floor+1],) + element[floor+2:])
                 if Z not in Old and Z not in T.keys():
                   T.update({Z:floor + 1})
-                  Old.add(D)                  
+                  Old.add(element)                  
               if floor - 1 >= 0 and all(i[:-1] + "R" in element[floor-1] for i in element[floor-1] if i[-1] == "M" and i[:-1] != Current[:-1] and i[:-1] != Current2[:-1]) and any(len(i) for i in element[:floor]):
                 Z = tuple(tuple(sorted(g)) for g in element[:floor-1] + ((Current,) + (Current2,) + element[floor-1],) + (element[floor][:obj] + element[floor][obj+1:obj2] + element[floor][obj2+1:],) + element[floor+1:])
                 if Z not in Old and Z not in T.keys():
                   T.update({Z:floor - 1})
-                  Old.add(D)                  
+                  Old.add(element)                  
     Step += 1
     Elements = T
     print(len(Elements), len(Old), Step,"\n")
 
-# Second Part -- ATTAINS CORRECT ANSWER OF 71 IN 27 MIN 26 SEC!
+# Second Part -- ATTAINS CORRECT ANSWER OF 71 IN 21 MIN 48 SEC!
 #print(BFSearch('''The first floor contains An elerium generator, An elerium-compatible microchip, A dilithium generator, A dilithium-compatible microchip, a polonium generator, a thulium generator, a thulium-compatible microchip, a promethium generator, a ruthenium generator, a ruthenium-compatible microchip, a cobalt generator, and a cobalt-compatible microchip.
 #The second floor contains a polonium-compatible microchip and a promethium-compatible microchip.
 #The third floor contains nothing relevant.
 #The fourth floor contains nothing relevant.'''))
 
-# First Part -- ATTAINS CORRECT ANSWER OF 47 IN 14 SEC!
+# First Part -- ATTAINS CORRECT ANSWER OF 47 IN 12 SEC!
 print(BFSearch('''The first floor contains a polonium generator, a thulium generator, a thulium-compatible microchip, a promethium generator, a ruthenium generator, a ruthenium-compatible microchip, a cobalt generator, and a cobalt-compatible microchip.
 #The second floor contains a polonium-compatible microchip and a promethium-compatible microchip.
 #The third floor contains nothing relevant.
