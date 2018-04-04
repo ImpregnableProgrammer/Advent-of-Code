@@ -4,10 +4,10 @@
 # Can move at MOST two RTGs or microchips in any combination: Two RTGs, RTG and corresponding microchip, Two microchips
 # 4 floors
 
-
-# Breadth-First search
-# INITIAL ATTEMPT
 import re
+
+# Breadth-first search
+# INITIAL ATTEMPT
 '''def First_Part(s):
   Z=lambda i:re.findall("[a-z]+(-compatible)?(microchip|generator)",s.split('\n')[i])
   T=[[[Z(0),Z(1),Z(2),Z(3)]]*2]
