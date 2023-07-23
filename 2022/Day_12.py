@@ -37,7 +37,7 @@ def second_part(grid, curr):
                 l.append((x + dx, y + dy))
     return 1 + second_part(grid, l)
 
-Input = open("Inputs/Day_11.txt").read().split("\n")[:-1]
+Input = open("Inputs/Day_12.txt").read().split("\n")[:-1]
 # Input = '''Sabqponm
 # abcryxxl
 # accszExk
