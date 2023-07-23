@@ -61,7 +61,7 @@ def second_part(paths):
         curr = (500, 0)
 
 Input = open("Inputs/Day_14.txt").read()[:-1].split("\n")
-# Input = '''498,4 -> 498,6 -> 496,6
-# 503,4 -> 502,4 -> 502,9 -> 494,9'''.split("\n")
+Sample = '''498,4 -> 498,6 -> 496,6
+503,4 -> 502,4 -> 502,9 -> 494,9'''.split("\n")
 print(first_part(Input))
 print(second_part(Input))
