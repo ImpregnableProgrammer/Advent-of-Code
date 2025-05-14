@@ -18,12 +18,21 @@ def part_two(lines):
     return sum(i * np.count_nonzero(i == array[:, 1]) for i in np.unique(array[:, 0]))
 
 
-INPUT = '''3   4
+INPUT = """3   4
 4   3
 2   5
 1   3
 3   9
-3   3'''.split('\n')
-INPUT = open("Inputs/Day_01.txt").read().split('\n')
+3   3""".split(
+    "\n"
+)
+INPUT = open("Inputs/Day_01.txt").read().split("\n")
 print(part_one(INPUT))
 print(part_two(INPUT))
+
+# Fancy matrix in Fira Code font!
+A = """
+⎧1 2 5⎫   ⎧1 3 5⎫
+⎨2 3 6⎬ x ⎨2 3 6⎬
+⎩3 4 7⎭   ⎩3 9 7⎭
+"""
